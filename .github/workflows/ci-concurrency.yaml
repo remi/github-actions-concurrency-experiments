@@ -1,4 +1,4 @@
-name: CI2
+name: CI (concurrency)
 
 on:
   push:
@@ -6,10 +6,13 @@ on:
       - main
 
 jobs:
-  ci2:
+  ci:
     runs-on: ubuntu-latest
 
+    concurrency:
+      group: ${{ github.ref }}
+      cancel-in-progress: true
+
     steps:
-      - uses: styfle/cancel-workflow-action@0.11.0
       - uses: actions/checkout@v2
       - run: bash -c "sleep 60 && echo 'done'"
